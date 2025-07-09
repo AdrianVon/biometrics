@@ -1,0 +1,16 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Recovery {
+  id        String   @id @default(uuid())
+  score     Int
+  hrv       Float?
+  rhr       Float?
+  timestamp DateTime @default(now())
+}
