@@ -10,8 +10,11 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 // OAuth login route
 app.get('/oauth/login', (req, res) => {
-const redirect = `https://api.prod.whoop.com/oauth/oauth2/auth?client_id=${process.env.WHOOP_CLIENT_ID}&redirect_uri=${process.env.WHOOP_REDIRECT_URI}&response_type=code&scope=read:recovery`;
+  const state = crypto.randomBytes(16).toString('hex'); // Optional but recommended
+  const redirect = `https://api.prod.whoop.com/oauth/oauth2/auth?client_id=${process.env.WHOOP_CLIENT_ID}&redirect_uri=${process.env.WHOOP_REDIRECT_URI}&response_type=code&scope=read:recovery&state=${state}`;
+  res.redirect(redirect); // <-- This line was missing
 });
+
 
 
 // OAuth callback (to be expanded)
